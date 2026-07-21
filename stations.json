@@ -1,0 +1,332 @@
+[
+  {
+    "id": 1,
+    "title_de": "Place Kléber",
+    "title_fr": "Place Kléber",
+    "motto_de": "Das Herz Straßburgs",
+    "motto_fr": "Le cœur de Strasbourg",
+    "lat": 48.5834,
+    "lon": 7.7458,
+    "info_de": "Der größte Platz der Stadt ist nach Jean-Baptiste Kléber benannt, einem in Straßburg geborenen General der Französischen Revolution.",
+    "info_fr": "La plus grande place de la ville porte le nom de Jean-Baptiste Kléber, général de la Révolution française né à Strasbourg.",
+    "questions_de": [
+      "Wer war Jean-Baptiste Kléber?",
+      "Warum ist dieser Platz heute wichtig?",
+      "Findet drei Hinweise auf eine moderne europäische Stadt."
+    ],
+    "questions_fr": [
+      "Qui était Jean-Baptiste Kléber ?",
+      "Pourquoi cette place est-elle importante aujourd’hui ?",
+      "Trouvez trois signes d’une ville européenne moderne."
+    ],
+    "photo_de": "Macht ein Gruppenfoto vor dem Kléber-Denkmal.",
+    "photo_fr": "Prenez une photo de groupe devant la statue de Kléber.",
+    "quiz": {
+      "q_de": "Wie heißt der größte Platz Straßburgs?",
+      "q_fr": "Comment s’appelle la plus grande place de Strasbourg ?",
+      "options": [
+        "Place Kléber",
+        "Place Gutenberg",
+        "Place Broglie"
+      ],
+      "answer": 0
+    }
+  },
+  {
+    "id": 2,
+    "title_de": "Straßburger Münster",
+    "title_fr": "Cathédrale Notre-Dame",
+    "motto_de": "Wo Stein Geschichte erzählt",
+    "motto_fr": "Quand la pierre raconte l’histoire",
+    "lat": 48.5819,
+    "lon": 7.75,
+    "info_de": "Der Turm ist 142 Meter hoch. Die Kathedrale ist vor allem gotisch und berühmt für ihre astronomische Uhr.",
+    "info_fr": "La tour mesure 142 mètres. La cathédrale est surtout gothique et célèbre pour son horloge astronomique.",
+    "questions_de": [
+      "Schätzt die Höhe des Turms.",
+      "Welche Baustile erkennt ihr?",
+      "Wofür wurde die astronomische Uhr gebaut?"
+    ],
+    "questions_fr": [
+      "Estimez la hauteur de la tour.",
+      "Quels styles architecturaux reconnaissez-vous ?",
+      "À quoi servait l’horloge astronomique ?"
+    ],
+    "photo_de": "Fotografiert ein Fassadendetail, das euch beeindruckt.",
+    "photo_fr": "Photographiez un détail de la façade qui vous impressionne.",
+    "quiz": {
+      "q_de": "Wie hoch ist der Turm?",
+      "q_fr": "Quelle est la hauteur de la tour ?",
+      "options": [
+        "98 m",
+        "142 m",
+        "165 m"
+      ],
+      "answer": 1
+    }
+  },
+  {
+    "id": 3,
+    "title_de": "Maison Kammerzell",
+    "title_fr": "Maison Kammerzell",
+    "motto_de": "Fachwerk voller Geschichten",
+    "motto_fr": "Une maison à colombages pleine d’histoires",
+    "lat": 48.5818,
+    "lon": 7.7495,
+    "info_de": "Das berühmte Fachwerkhaus stammt aus dem 15. Jahrhundert und ist reich mit Figuren und Ornamenten verziert.",
+    "info_fr": "Cette célèbre maison à colombages date du XVe siècle et possède de nombreuses sculptures et décorations.",
+    "questions_de": [
+      "Welche Figuren entdeckt ihr?",
+      "Warum waren Fachwerkhäuser typisch für die Region?",
+      "Würdet ihr hier gern wohnen? Warum?"
+    ],
+    "questions_fr": [
+      "Quels personnages découvrez-vous ?",
+      "Pourquoi les maisons à colombages étaient-elles typiques de la région ?",
+      "Aimeriez-vous y habiter ? Pourquoi ?"
+    ],
+    "photo_de": "Fotografiert das schönste geschnitzte Detail.",
+    "photo_fr": "Photographiez le plus beau détail sculpté.",
+    "quiz": {
+      "q_de": "Aus welchem Jahrhundert stammt das Haus?",
+      "q_fr": "De quel siècle date la maison ?",
+      "options": [
+        "13. Jahrhundert",
+        "15. Jahrhundert",
+        "18. Jahrhundert"
+      ],
+      "answer": 1
+    }
+  },
+  {
+    "id": 4,
+    "title_de": "Place du Château",
+    "title_fr": "Place du Château",
+    "motto_de": "Karl der Große und Europa",
+    "motto_fr": "Charlemagne et l’Europe",
+    "lat": 48.5817,
+    "lon": 7.7506,
+    "info_de": "Karl der Große vereinte große Teile Europas. Straßburg und das Elsass gehörten zu seinem Frankenreich.",
+    "info_fr": "Charlemagne a uni de vastes régions d’Europe. Strasbourg et l’Alsace faisaient partie de son empire franc.",
+    "questions_de": [
+      "Warum nennt man ihn den Vater Europas?",
+      "Welche Gemeinsamkeiten gibt es mit der EU?",
+      "Findet zwei europäische Hinweise."
+    ],
+    "questions_fr": [
+      "Pourquoi l’appelle-t-on le père de l’Europe ?",
+      "Quels points communs voyez-vous avec l’Union européenne ?",
+      "Trouvez deux signes européens."
+    ],
+    "photo_de": "Fotografiert ein europäisches Symbol.",
+    "photo_fr": "Photographiez un symbole européen.",
+    "quiz": {
+      "q_de": "Welchem Reich gehörte Straßburg an?",
+      "q_fr": "À quel empire Strasbourg appartenait-elle ?",
+      "options": [
+        "Frankenreich",
+        "Römisches Reich im 18. Jh.",
+        "Osmanisches Reich"
+      ],
+      "answer": 0
+    }
+  },
+  {
+    "id": 5,
+    "title_de": "Palais Rohan",
+    "title_fr": "Palais Rohan",
+    "motto_de": "Macht und Pracht",
+    "motto_fr": "Pouvoir et prestige",
+    "lat": 48.5811,
+    "lon": 7.7521,
+    "info_de": "Der Palast war die Residenz der Fürstbischöfe. Heute beherbergt er mehrere Museen.",
+    "info_fr": "Le palais était la résidence des princes-évêques. Aujourd’hui, il abrite plusieurs musées.",
+    "questions_de": [
+      "Welche Macht hatten die Bischöfe?",
+      "Warum wohnten sie in einem großen Palast?",
+      "Welche Details wirken besonders repräsentativ?"
+    ],
+    "questions_fr": [
+      "Quel pouvoir avaient les évêques ?",
+      "Pourquoi habitaient-ils dans un grand palais ?",
+      "Quels détails paraissent prestigieux ?"
+    ],
+    "photo_de": "Fotografiert ein Fenster oder Portal.",
+    "photo_fr": "Photographiez une fenêtre ou un portail.",
+    "quiz": {
+      "q_de": "Wer wohnte im Palais Rohan?",
+      "q_fr": "Qui habitait le Palais Rohan ?",
+      "options": [
+        "Fürstbischöfe",
+        "Kaufleute",
+        "Gerber"
+      ],
+      "answer": 0
+    }
+  },
+  {
+    "id": 6,
+    "title_de": "Straßburger Eide",
+    "title_fr": "Serments de Strasbourg",
+    "motto_de": "Ein Meilenstein der Sprachgeschichte",
+    "motto_fr": "Un tournant dans l’histoire des langues",
+    "lat": 48.5817,
+    "lon": 7.7506,
+    "info_de": "842 sprachen Ludwig der Deutsche und Karl der Kahle ihre Eide jeweils in der Sprache der Soldaten des anderen.",
+    "info_fr": "En 842, Louis le Germanique et Charles le Chauve ont prononcé leur serment dans la langue des soldats de l’autre.",
+    "questions_de": [
+      "Warum war die Sprache der anderen Soldaten wichtig?",
+      "Warum gelten die Eide als Symbol Europas?",
+      "Welche Vorteile hat Mehrsprachigkeit heute?"
+    ],
+    "questions_fr": [
+      "Pourquoi fallait-il utiliser la langue des autres soldats ?",
+      "Pourquoi les serments sont-ils un symbole européen ?",
+      "Quels avantages offre le plurilinguisme ?"
+    ],
+    "photo_de": "Fotografiert etwas, das Mehrsprachigkeit zeigt.",
+    "photo_fr": "Photographiez quelque chose qui montre le plurilinguisme.",
+    "quiz": {
+      "q_de": "In welchem Jahr wurden die Eide gesprochen?",
+      "q_fr": "En quelle année les serments ont-ils été prononcés ?",
+      "options": [
+        "814",
+        "842",
+        "987"
+      ],
+      "answer": 1
+    }
+  },
+  {
+    "id": 7,
+    "title_de": "Petite France",
+    "title_fr": "Petite France",
+    "motto_de": "Zwischen Wasser und Fachwerk",
+    "motto_fr": "Entre eau et colombages",
+    "lat": 48.5793,
+    "lon": 7.7427,
+    "info_de": "Früher lebten hier Gerber, Müller und Fischer. Der Name geht auf ein ehemaliges Krankenhaus zurück.",
+    "info_fr": "Autrefois, des tanneurs, meuniers et pêcheurs vivaient ici. Le nom vient d’un ancien hôpital.",
+    "questions_de": [
+      "Warum brauchten diese Berufe Wasser?",
+      "Welche Gebäude sind gut erhalten?",
+      "Warum heißt das Viertel Petite France?"
+    ],
+    "questions_fr": [
+      "Pourquoi ces métiers avaient-ils besoin d’eau ?",
+      "Quels bâtiments sont bien conservés ?",
+      "Pourquoi le quartier s’appelle-t-il Petite France ?"
+    ],
+    "photo_de": "Macht euer schönstes Fachwerkfoto.",
+    "photo_fr": "Prenez votre plus belle photo de colombages.",
+    "quiz": {
+      "q_de": "Wer arbeitete früher in diesem Viertel?",
+      "q_fr": "Qui travaillait autrefois dans ce quartier ?",
+      "options": [
+        "Gerber, Müller und Fischer",
+        "Abgeordnete",
+        "Winzer und Bergleute"
+      ],
+      "answer": 0
+    }
+  },
+  {
+    "id": 8,
+    "title_de": "Die Ill",
+    "title_fr": "L’Ill",
+    "motto_de": "Der Fluss der Stadt",
+    "motto_fr": "La rivière de la ville",
+    "lat": 48.5788,
+    "lon": 7.742,
+    "info_de": "Die Ill prägte Handel, Transport, Verteidigung und Wasserversorgung. Heute ist sie wichtig für Tourismus und Erholung.",
+    "info_fr": "L’Ill a joué un rôle dans le commerce, le transport, la défense et l’approvisionnement en eau. Aujourd’hui, elle est importante pour le tourisme.",
+    "questions_de": [
+      "Wie viele Brücken habt ihr überquert?",
+      "Welche Vorteile brachte der Fluss früher?",
+      "Welche Bedeutung hat er heute?"
+    ],
+    "questions_fr": [
+      "Combien de ponts avez-vous traversés ?",
+      "Quels avantages la rivière apportait-elle autrefois ?",
+      "Quel rôle joue-t-elle aujourd’hui ?"
+    ],
+    "photo_de": "Fotografiert eure Lieblingsbrücke.",
+    "photo_fr": "Photographiez votre pont préféré.",
+    "quiz": {
+      "q_de": "Wie heißt der Fluss?",
+      "q_fr": "Comment s’appelle la rivière ?",
+      "options": [
+        "Ill",
+        "Mosel",
+        "Saône"
+      ],
+      "answer": 0
+    }
+  },
+  {
+    "id": 9,
+    "title_de": "Barrage Vauban",
+    "title_fr": "Barrage Vauban",
+    "motto_de": "Verteidigung mit Wasser",
+    "motto_fr": "Se défendre grâce à l’eau",
+    "lat": 48.5792,
+    "lon": 7.7393,
+    "info_de": "Bei Gefahr konnten Schleusen geöffnet und Flächen vor der Stadt überflutet werden.",
+    "info_fr": "En cas d’attaque, on pouvait ouvrir les écluses et inonder les terrains devant la ville.",
+    "questions_de": [
+      "Welche Funktion hatte die Staumauer?",
+      "Warum war Straßburg strategisch wichtig?",
+      "Welche Mächte kontrollierten die Stadt?"
+    ],
+    "questions_fr": [
+      "Quelle était la fonction du barrage ?",
+      "Pourquoi Strasbourg était-elle stratégique ?",
+      "Quelles puissances ont contrôlé la ville ?"
+    ],
+    "photo_de": "Macht ein Panoramafoto von der Terrasse.",
+    "photo_fr": "Prenez une photo panoramique depuis la terrasse.",
+    "quiz": {
+      "q_de": "Wie half die Staumauer bei der Verteidigung?",
+      "q_fr": "Comment le barrage aidait-il à défendre la ville ?",
+      "options": [
+        "Durch Überflutung",
+        "Durch Feuer",
+        "Durch Zugbrücken"
+      ],
+      "answer": 0
+    }
+  },
+  {
+    "id": 10,
+    "title_de": "Europaviertel",
+    "title_fr": "Quartier européen",
+    "motto_de": "Europa beginnt mit Begegnungen",
+    "motto_fr": "L’Europe commence par les rencontres",
+    "lat": 48.5975,
+    "lon": 7.7684,
+    "info_de": "Hier befinden sich das Europäische Parlament, der Europarat und der Europäische Gerichtshof für Menschenrechte.",
+    "info_fr": "On y trouve le Parlement européen, le Conseil de l’Europe et la Cour européenne des droits de l’homme.",
+    "questions_de": [
+      "Welche Aufgaben haben die Institutionen?",
+      "Warum wurde Straßburg als Sitz gewählt?",
+      "Was bedeutet Europa für euch?"
+    ],
+    "questions_fr": [
+      "Quelles sont les missions de ces institutions ?",
+      "Pourquoi Strasbourg a-t-elle été choisie ?",
+      "Que signifie l’Europe pour vous ?"
+    ],
+    "photo_de": "Macht ein Gruppenfoto vor einem europäischen Gebäude.",
+    "photo_fr": "Prenez une photo de groupe devant un bâtiment européen.",
+    "quiz": {
+      "q_de": "Welche Institution sitzt hier?",
+      "q_fr": "Quelle institution se trouve ici ?",
+      "options": [
+        "Europäisches Parlament",
+        "NATO",
+        "UNO-Hauptsitz"
+      ],
+      "answer": 0
+    }
+  }
+]
