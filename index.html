@@ -1,74 +1,65 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#17324d">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="style.css">
-<title>Straßburg-Rallye</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#15324a"><meta name="description" content="Digitale zweisprachige Straßburg-Rallye">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>À la découverte de Strasbourg</title>
 </head>
 <body>
-<header>
-  <div>
-    <div class="eyebrow">À la découverte de Strasbourg</div>
-    <h1>Straßburg entdecken</h1>
-  </div>
-  <button id="langBtn" aria-label="Sprache wechseln">FR</button>
-</header>
 
+<div id="languageGate" class="language-gate" role="dialog" aria-modal="true" aria-labelledby="languageTitle">
+  <div class="language-panel">
+    <div class="language-emblem">FR<br><span>↔</span><br>DE</div>
+    <p class="overline">Bienvenue · Willkommen</p>
+    <h2 id="languageTitle">Choisissez votre langue<br><span>Wählen Sie Ihre Sprache</span></h2>
+    <p class="language-intro">Vous pourrez changer de langue à tout moment.<br>
+    Sie können die Sprache jederzeit wechseln.</p>
+    <div class="language-buttons">
+      <button class="language-choice" data-set-language="fr" lang="fr">
+        <span class="flag" aria-hidden="true">🇫🇷</span>
+        <span><strong>Français</strong><small>Continuer en français</small></span>
+      </button>
+      <button class="language-choice" data-set-language="de" lang="de">
+        <span class="flag" aria-hidden="true">🇩🇪</span>
+        <span><strong>Deutsch</strong><small>Auf Deutsch fortfahren</small></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<header><div><div class="kicker">À la découverte de Strasbourg</div><h1 data-de="Straßburg entdecken" data-fr="Découvrir Strasbourg"></h1></div><button id="langBtn" aria-label="Sprache ändern · Changer de langue">DE / FR</button></header>
 <main>
 <section id="home" class="view active">
-  <div class="hero">
-    <div class="badge">10 Stationen · 2–3 Stunden</div>
-    <h2 data-de="Eine Stadt zwischen Geschichte, Sprache und Europa" data-fr="Une ville entre histoire, langues et Europe"></h2>
-    <p data-de="Arbeitet im Team, löst Aufgaben, sammelt Punkte und entdeckt Straßburg auf Deutsch und Französisch."
-       data-fr="Travaillez en équipe, résolvez les missions, gagnez des points et découvrez Strasbourg en allemand et en français."></p>
-    <label><span data-de="Teamname" data-fr="Nom de l’équipe"></span>
-      <input id="teamName" placeholder="Les explorateurs">
-    </label>
-    <button class="primary" id="startBtn" data-de="Rallye starten" data-fr="Commencer le rallye"></button>
+ <div class="hero">
+  <div class="seal">STRASBOURG<br><b>RALLYE</b></div>
+  <p class="overline" data-de="Digitale Stadterkundung" data-fr="Exploration urbaine numérique"></p>
+  <h2 data-de="Geschichte, Sprache und Europa erleben" data-fr="Vivre l’histoire, les langues et l’Europe"></h2>
+  <p data-de="Ohne Heft, ohne Anmeldung und ohne Cloud. Jede Gruppe entscheidet selbst, welche Stationen sie besucht."
+     data-fr="Sans livret, sans inscription et sans cloud. Chaque groupe choisit librement les étapes qu’il souhaite visiter."></p>
+  <label><span data-de="Teamname" data-fr="Nom de l’équipe"></span><input id="teamName" placeholder="Les explorateurs"></label>
+  <div class="route-choice">
+   <button data-route="compact"><b data-de="Kompakte Route" data-fr="Parcours compact"></b><small data-de="Stationen 1–9 · Altstadt" data-fr="Étapes 1–9 · Vieille ville"></small></button>
+   <button data-route="full"><b data-de="Komplette Route" data-fr="Parcours complet"></b><small data-de="Alle Stationen · mit Europaviertel" data-fr="Toutes les étapes · avec quartier européen"></small></button>
   </div>
-  <div class="card">
-    <h3 data-de="So funktioniert’s" data-fr="Comment ça marche"></h3>
-    <p data-de="An jeder Station: lesen, beobachten, antworten, fotografieren und abhaken."
-       data-fr="À chaque étape : lire, observer, répondre, photographier et valider."></p>
-  </div>
+  <button class="primary" id="startBtn" data-de="Rallye starten" data-fr="Commencer la rallye"></button>
+ </div>
+ <div class="grid2">
+  <div class="card"><span class="feature">♿</span><h3 data-de="Flexible Teilnahme" data-fr="Participation flexible"></h3><p data-de="Stationen können jederzeit ohne Nachteil ausgelassen werden." data-fr="Les étapes peuvent être sautées à tout moment sans pénalité."></p></div>
+  <div class="card"><span class="feature">🔒</span><h3 data-de="Privat" data-fr="Privé"></h3><p data-de="Alle Daten bleiben auf dem eigenen Gerät." data-fr="Toutes les données restent sur votre appareil."></p></div>
+ </div>
 </section>
-
 <section id="list" class="view">
-  <div class="toolbar">
-    <button class="ghost" data-nav="home">← <span data-de="Start" data-fr="Accueil"></span></button>
-    <div><strong id="score">0</strong> / 100 ⭐</div>
-  </div>
-  <div id="stationList"></div>
+ <div class="toolbar"><button class="ghost" data-nav="home">← <span data-de="Start" data-fr="Accueil"></span></button><div class="score"><strong id="score">0</strong> ⭐</div></div>
+ <div id="summaryBar" class="summary"></div><div id="locationNote" class="notice"></div><div id="stationList"></div>
+ <button class="primary" id="finishBtn" data-de="Rallye abschließen" data-fr="Terminer la rallye"></button>
 </section>
-
-<section id="station" class="view">
-  <div class="toolbar">
-    <button class="ghost" data-nav="list">← <span data-de="Übersicht" data-fr="Parcours"></span></button>
-    <div id="stationCounter"></div>
-  </div>
-  <article id="stationCard"></article>
-</section>
-
+<section id="station" class="view"><div class="toolbar"><button class="ghost" data-nav="list">← <span data-de="Übersicht" data-fr="Parcours"></span></button><div id="stationCounter"></div></div><article id="stationCard"></article></section>
 <section id="finish" class="view">
-  <div class="hero">
-    <div class="badge">🏆</div>
-    <h2 data-de="Geschafft!" data-fr="Bravo !"></h2>
-    <p id="finishText"></p>
-    <button class="primary" data-nav="list" data-de="Ergebnisse ansehen" data-fr="Voir les résultats"></button>
-    <button class="ghost" id="resetBtn" data-de="Neu starten" data-fr="Recommencer"></button>
-  </div>
+ <div class="hero"><div class="seal">🏆</div><p class="overline" data-de="Ziel erreicht" data-fr="Objectif atteint"></p><h2 data-de="Bravo, Straßburg-Entdecker!" data-fr="Bravo, explorateurs de Strasbourg !"></h2><p id="finishText"></p></div>
+ <div class="card"><button class="primary" id="certificateBtn" data-de="Urkunde öffnen" data-fr="Ouvrir le certificat"></button><button class="secondary" id="exportBtn" data-de="Ergebnisse sichern" data-fr="Enregistrer les résultats"></button><button class="ghost full" data-nav="list" data-de="Zur Übersicht" data-fr="Retour au parcours"></button><button class="danger full" id="resetBtn" data-de="Lokale Daten löschen" data-fr="Effacer les données locales"></button></div>
 </section>
 </main>
-
-<nav>
-  <button data-nav="home">⌂<small data-de="Start" data-fr="Accueil"></small></button>
-  <button data-nav="list">☷<small data-de="Stationen" data-fr="Étapes"></small></button>
-  <button id="installBtn" hidden>＋<small data-de="Installieren" data-fr="Installer"></small></button>
-</nav>
-
+<nav><button data-nav="home">⌂<small data-de="Start" data-fr="Accueil"></small></button><button data-nav="list">☷<small data-de="Stationen" data-fr="Étapes"></small></button><button id="installBtn" hidden>＋<small data-de="Installieren" data-fr="Installer"></small></button></nav>
 <script src="app.js"></script>
-</body>
-</html>
+</body></html>
