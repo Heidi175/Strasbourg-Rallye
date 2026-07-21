@@ -7,7 +7,28 @@
 <title>À la découverte de Strasbourg</title>
 </head>
 <body>
-<header><div><div class="kicker">À la découverte de Strasbourg</div><h1>Straßburg entdecken</h1></div><button id="langBtn">FR</button></header>
+
+<div id="languageGate" class="language-gate" role="dialog" aria-modal="true" aria-labelledby="languageTitle">
+  <div class="language-panel">
+    <div class="language-emblem">FR<br><span>↔</span><br>DE</div>
+    <p class="overline">Bienvenue · Willkommen</p>
+    <h2 id="languageTitle">Choisissez votre langue<br><span>Wählen Sie Ihre Sprache</span></h2>
+    <p class="language-intro">Vous pourrez changer de langue à tout moment.<br>
+    Sie können die Sprache jederzeit wechseln.</p>
+    <div class="language-buttons">
+      <button class="language-choice" data-set-language="fr" lang="fr">
+        <span class="flag" aria-hidden="true">🇫🇷</span>
+        <span><strong>Français</strong><small>Continuer en français</small></span>
+      </button>
+      <button class="language-choice" data-set-language="de" lang="de">
+        <span class="flag" aria-hidden="true">🇩🇪</span>
+        <span><strong>Deutsch</strong><small>Auf Deutsch fortfahren</small></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<header><div><div class="kicker">À la découverte de Strasbourg</div><h1 data-de="Straßburg entdecken" data-fr="Découvrir Strasbourg"></h1></div><button id="langBtn" aria-label="Sprache ändern · Changer de langue">DE / FR</button></header>
 <main>
 <section id="home" class="view active">
  <div class="hero">

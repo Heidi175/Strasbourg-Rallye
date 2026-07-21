@@ -1,9 +1,19 @@
 
 let stations=[],lang=localStorage.getItem('lang')||'de',current=0,userPos=null,route=localStorage.getItem('route')||'compact';
+const hasLanguageChoice=()=>!!localStorage.getItem('languageChosen');
 let state=JSON.parse(localStorage.getItem('strasRallyeFinal')||'{}');
 const V=[...document.querySelectorAll('.view')], tx=(de,fr)=>lang==='de'?de:fr;
 function save(){localStorage.setItem('strasRallyeFinal',JSON.stringify(state))}
-function translate(){document.documentElement.lang=lang;document.querySelectorAll('[data-de]').forEach(e=>e.textContent=e.dataset[lang]);document.getElementById('langBtn').textContent=lang==='de'?'FR':'DE';renderList();if(document.getElementById('station').classList.contains('active'))renderStation(current)}
+function translate(){
+document.documentElement.lang=lang;
+document.title=lang==='de'?'Straßburg entdecken – Stadtrallye':'Découvrir Strasbourg – Rallye urbaine';
+document.querySelectorAll('[data-de]').forEach(e=>e.textContent=e.dataset[lang]);
+const langBtn=document.getElementById('langBtn');
+langBtn.textContent=lang==='de'?'🇩🇪 DE':'🇫🇷 FR';
+langBtn.title=lang==='de'?'Sprache ändern':'Changer de langue';
+renderList();
+if(document.getElementById('station').classList.contains('active'))renderStation(current)
+}
 function show(id){V.forEach(v=>v.classList.toggle('active',v.id===id));scrollTo(0,0);if(id==='list')renderList()}
 function activeStations(){return route==='compact'?stations.filter(s=>s.id!==10):stations}
 function stats(){let done=0,skipped=0,q=0;activeStations().forEach(s=>{const x=state[s.id]||{};if(x.done)done++;if(x.skipped)skipped++;if(x.quizCorrect)q+=5});return{done,skipped,open:activeStations().length-done-skipped,score:done*10+q,total:activeStations().length}}
@@ -35,5 +45,15 @@ function exportData(){const p={team:localStorage.getItem('teamName')||'',date:ne
 function cert(){const a=stats(),team=localStorage.getItem('teamName')||'________________';const w=open('','_blank');w.document.write(`<!doctype html><meta charset="utf-8"><style>body{font-family:Georgia,serif;text-align:center;padding:7vh;color:#15324a}main{border:9px double #d7aa4e;padding:8vh 5vw}h1{font-size:3rem}.name{font-size:2.2rem;border-bottom:2px solid;padding:20px}p{font-size:1.25rem;line-height:1.6}@media print{button{display:none}}</style><main><h1>Certificat · Urkunde</h1><h2>Explorateur / Exploratrice de Strasbourg</h2><div class="name">${team}</div><p>${tx(`hat ${a.done} Stationen entdeckt und ${a.score} Punkte erreicht.`,`a découvert ${a.done} étapes et obtenu ${a.score} points.`)}</p><p>À bientôt Strasbourg!</p><button onclick="print()">Drucken / Imprimer</button></main>`);w.document.close()}
 fetch('stations.json').then(r=>r.json()).then(d=>{stations=d;document.getElementById('teamName').value=localStorage.getItem('teamName')||'';document.querySelector(`[data-route="${route}"]`).classList.add('selected');translate();if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{userPos={lat:p.coords.latitude,lon:p.coords.longitude};renderList()},()=>{})});
 document.querySelectorAll('[data-route]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-route]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');route=b.dataset.route;localStorage.setItem('route',route)});
-document.getElementById('langBtn').onclick=()=>{lang=lang==='de'?'fr':'de';localStorage.setItem('lang',lang);translate()};document.getElementById('startBtn').onclick=()=>{localStorage.setItem('teamName',document.getElementById('teamName').value.trim());show('list')};document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>show(b.dataset.nav));document.getElementById('finishBtn').onclick=finish;document.getElementById('exportBtn').onclick=exportData;document.getElementById('certificateBtn').onclick=cert;document.getElementById('resetBtn').onclick=()=>{if(confirm(tx('Wirklich alle lokalen Daten löschen?','Effacer toutes les données locales ?'))){localStorage.removeItem('strasRallyeFinal');localStorage.removeItem('teamName');location.reload()}};
+function openLanguageGate(){document.getElementById('languageGate').classList.remove('hidden')}
+function chooseLanguage(chosen){
+lang=chosen;
+localStorage.setItem('lang',lang);
+localStorage.setItem('languageChosen','yes');
+document.getElementById('languageGate').classList.add('hidden');
+translate()
+}
+document.querySelectorAll('[data-set-language]').forEach(b=>b.onclick=()=>chooseLanguage(b.dataset.setLanguage));
+document.getElementById('langBtn').onclick=openLanguageGate;
+if(hasLanguageChoice())document.getElementById('languageGate').classList.add('hidden');document.getElementById('startBtn').onclick=()=>{localStorage.setItem('teamName',document.getElementById('teamName').value.trim());show('list')};document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>show(b.dataset.nav));document.getElementById('finishBtn').onclick=finish;document.getElementById('exportBtn').onclick=exportData;document.getElementById('certificateBtn').onclick=cert;document.getElementById('resetBtn').onclick=()=>{if(confirm(tx('Wirklich alle lokalen Daten löschen?','Effacer toutes les données locales ?'))){localStorage.removeItem('strasRallyeFinal');localStorage.removeItem('teamName');location.reload()}};
 let deferredPrompt;addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').hidden=false});document.getElementById('installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}};if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
