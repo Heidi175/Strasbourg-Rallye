@@ -1,9 +1,9 @@
 {
-  "name": "À la découverte de Strasbourg",
+  "name": "Straßburg-Rallye · À la découverte de Strasbourg",
   "short_name": "Straßburg-Rallye",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f4efe6",
-  "theme_color": "#15324a",
+  "background_color": "#f6f1e8",
+  "theme_color": "#17324d",
   "icons": []
 }
