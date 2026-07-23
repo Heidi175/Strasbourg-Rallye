@@ -1,5 +1,17 @@
 
 let stations=[],lang=localStorage.getItem('lang')||'de',current=0,userPos=null,route=localStorage.getItem('route')||'compact';
+const MAP_STATIONS=[
+ {id:1,title_de:'Place Kléber',title_fr:'Place Kléber',lat:48.5834,lon:7.7458},
+ {id:2,title_de:'Straßburger Münster',title_fr:'Cathédrale Notre-Dame',lat:48.5819,lon:7.75},
+ {id:3,title_de:'Maison Kammerzell',title_fr:'Maison Kammerzell',lat:48.5818,lon:7.7495},
+ {id:4,title_de:'Place du Château',title_fr:'Place du Château',lat:48.5817,lon:7.7506},
+ {id:5,title_de:'Palais Rohan',title_fr:'Palais Rohan',lat:48.5811,lon:7.7521},
+ {id:6,title_de:'Straßburger Eide',title_fr:'Serments de Strasbourg',lat:48.5817,lon:7.7506},
+ {id:7,title_de:'Petite France',title_fr:'Petite France',lat:48.5793,lon:7.7427},
+ {id:8,title_de:'Die Ill',title_fr:'L’Ill',lat:48.5788,lon:7.742},
+ {id:9,title_de:'Barrage Vauban',title_fr:'Barrage Vauban',lat:48.5792,lon:7.7393},
+ {id:10,title_de:'Europaviertel',title_fr:'Quartier européen',lat:48.5975,lon:7.7684}
+];
 const hasLanguageChoice=()=>!!localStorage.getItem('languageChosen');
 let state=JSON.parse(localStorage.getItem('strasRallyeFinal')||'{}');
 const V=[...document.querySelectorAll('.view')], tx=(de,fr)=>lang==='de'?de:fr;
@@ -12,6 +24,7 @@ const langBtn=document.getElementById('langBtn');
 langBtn.textContent=lang==='de'?'🇩🇪 DE':'🇫🇷 FR';
 langBtn.title=lang==='de'?'Sprache ändern':'Changer de langue';
 renderList();
+renderTourMap();
 if(document.getElementById('station').classList.contains('active'))renderStation(current)
 }
 function show(id){V.forEach(v=>v.classList.toggle('active',v.id===id));scrollTo(0,0);if(id==='list')renderList()}
@@ -19,11 +32,48 @@ function activeStations(){return route==='compact'?stations.filter(s=>s.id!==10)
 function stats(){let done=0,skipped=0,q=0;activeStations().forEach(s=>{const x=state[s.id]||{};if(x.done)done++;if(x.skipped)skipped++;if(x.quizCorrect)q+=5});return{done,skipped,open:activeStations().length-done-skipped,score:done*10+q,total:activeStations().length}}
 function km(a,b,c,d){const R=6371,p=Math.PI/180,x=(c-a)*p,y=(d-b)*p;const h=Math.sin(x/2)**2+Math.cos(a*p)*Math.cos(c*p)*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
 function distanceText(s){if(!userPos)return'';const d=km(userPos.lat,userPos.lon,s.lat,s.lon);return d<1?Math.round(d*1000)+' m':d.toFixed(1)+' km'}
+function mapActiveStations(){const source=stations.length?stations:MAP_STATIONS;return route==='compact'?source.filter(s=>s.id!==10):source}
+function plannedStations(){return mapActiveStations().filter(s=>!state[s.id]?.skipped)}
+function plannedDistance(){
+ const list=plannedStations();let total=0;
+ for(let i=1;i<list.length;i++)total+=km(list[i-1].lat,list[i-1].lon,list[i].lat,list[i].lon);
+ return total
+}
+function renderTourMap(){
+ const map=document.getElementById('tourMap'),picker=document.getElementById('mapStationPicker'),estimate=document.getElementById('routeEstimate');
+ if(!map||!picker||!stations.length)return;
+ const list=mapActiveStations(),lats=list.map(s=>s.lat),lons=list.map(s=>s.lon),minLat=Math.min(...lats),maxLat=Math.max(...lats),minLon=Math.min(...lons),maxLon=Math.max(...lons);
+ const W=680,H=410,P=42,dx=maxLon-minLon||1,dy=maxLat-minLat||1;
+ const points=list.map((s,i)=>{
+  let x=P+(s.lon-minLon)/dx*(W-P*2),y=H-P-(s.lat-minLat)/dy*(H-P*2);
+  if(i&&list.slice(0,i).some(o=>o.lat===s.lat&&o.lon===s.lon)){x+=24;y-=20}
+  return{s,x,y,skipped:!!state[s.id]?.skipped}
+ });
+ const route=points.filter(p=>!p.skipped).map(p=>`${p.x},${p.y}`).join(' ');
+ map.setAttribute('aria-label',tx(`Karte mit ${list.length} Rallye-Stationen`,`Carte avec ${list.length} étapes du rallye`));
+ map.innerHTML=`<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">
+  <defs><pattern id="blocks" width="54" height="54" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><rect width="43" height="34" rx="8" fill="#ffffff" opacity=".58"/></pattern></defs>
+  <rect width="${W}" height="${H}" rx="22" fill="#e8eee9"/><rect width="${W}" height="${H}" rx="22" fill="url(#blocks)"/>
+  <path d="M-30 338 C125 272 190 410 355 333 S555 255 720 302" fill="none" stroke="#9fcbd6" stroke-width="24" opacity=".9"/>
+  <path d="M-30 338 C125 272 190 410 355 333 S555 255 720 302" fill="none" stroke="#dceff3" stroke-width="12"/>
+  ${route?`<polyline points="${route}" fill="none" stroke="#a13945" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>`:''}
+  ${points.map(p=>`<g class="${p.skipped?'map-point skipped':'map-point'}" data-map-id="${p.s.id}" transform="translate(${p.x} ${p.y})"><circle r="18"/><text text-anchor="middle" dy=".36em">${p.s.id}</text></g>`).join('')}
+  <g transform="translate(626 43)" class="north"><text text-anchor="middle">N</text><path d="M0 8 L-7 25 L0 21 L7 25 Z"/></g>
+ </svg>`;
+ picker.innerHTML=list.map(s=>`<label class="map-pick ${state[s.id]?.skipped?'is-skipped':''}"><input type="checkbox" data-plan-id="${s.id}" ${state[s.id]?.skipped?'':'checked'}><span class="map-pick-number">${s.id}</span><span>${lang==='de'?s.title_de:s.title_fr}</span></label>`).join('');
+ picker.querySelectorAll('[data-plan-id]').forEach(input=>input.onchange=()=>{
+  const id=+input.dataset.planId;state[id]=state[id]||{answers:[]};state[id].skipped=!input.checked;if(input.checked)state[id].done=false;save();renderTourMap();renderList()
+ });
+ map.querySelectorAll('[data-map-id]').forEach(point=>point.onclick=()=>picker.querySelector(`[data-plan-id="${point.dataset.mapId}"]`)?.click());
+ const included=plannedStations().length,d=plannedDistance();
+ estimate.innerHTML=`<strong>${included} / ${list.length}</strong><span>${tx('Stationen','étapes')}</span><strong>≈ ${d.toFixed(1)} km</strong><span>${tx('direkte Route','trajet direct')}</span>`
+}
 function renderList(){const box=document.getElementById('stationList');if(!box||!stations.length)return;const list=activeStations();
 box.innerHTML=list.map(s=>{let x=state[s.id]||{},cls=x.done?'done':x.skipped?'skipped':'',icon=x.done?'✓':x.skipped?'–':s.id;return`<div class="station-item ${cls}" data-open="${stations.indexOf(s)}"><div class="station-num">${icon}</div><div class="station-main"><h3>${lang==='de'?s.title_de:s.title_fr}</h3><p>${x.skipped?tx('Ausgelassen','Étape sautée'):(lang==='de'?s.motto_de:s.motto_fr)}</p><div class="distance">${distanceText(s)}</div></div><b>›</b></div>`}).join('');
 box.querySelectorAll('[data-open]').forEach(e=>e.onclick=()=>{current=+e.dataset.open;renderStation(current);show('station')});
 const a=stats();document.getElementById('score').textContent=a.score;document.getElementById('summaryBar').innerHTML=`<span>✓ ${a.done} ${tx('erledigt','terminées')}</span><span>– ${a.skipped} ${tx('ausgelassen','sautées')}</span><span>○ ${a.open} ${tx('offen','ouvertes')}</span>`;
 document.getElementById('locationNote').textContent=userPos?tx('Entfernungen basieren auf eurem aktuellen Standort.','Les distances sont calculées depuis votre position actuelle.'):tx('Standortfreigabe ist optional. Ohne sie funktioniert die Rallye ebenfalls.','Le partage de position est facultatif. La rallye fonctionne aussi sans lui.')}
+renderTourMap()
 function speak(s){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(lang==='de'?s.info_de:s.info_fr);u.lang=lang==='de'?'de-DE':'fr-FR';speechSynthesis.speak(u)}
 function renderStation(i){const s=stations[i],x=state[s.id]||{answers:[]},qs=lang==='de'?s.questions_de:s.questions_fr,q=s.quiz;
 document.getElementById('stationCounter').textContent=`${s.id} / ${activeStations().length}`;
@@ -44,8 +94,9 @@ document.querySelector('.skip').onclick=()=>{state[s.id]=state[s.id]||{answers:[
 function finish(){const a=stats(),team=localStorage.getItem('teamName')||tx('Euer Team','Votre équipe');document.getElementById('finishText').textContent=tx(`${team} hat ${a.done} Stationen besucht, ${a.skipped} ausgelassen und ${a.score} Punkte gesammelt.`,`${team} a visité ${a.done} étapes, en a sauté ${a.skipped} et obtenu ${a.score} points.`);show('finish')}
 function exportData(){const p={team:localStorage.getItem('teamName')||'',date:new Date().toISOString(),route,summary:stats(),stations:activeStations().map(s=>({id:s.id,title:s.title_de,status:state[s.id]?.done?'done':state[s.id]?.skipped?'skipped':'open',answers:state[s.id]?.answers||[],quizCorrect:!!state[s.id]?.quizCorrect}))};const b=new Blob([JSON.stringify(p,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='strassburg-rallye-ergebnis.json';a.click();URL.revokeObjectURL(u)}
 function cert(){const a=stats(),team=localStorage.getItem('teamName')||'________________';const w=open('','_blank');w.document.write(`<!doctype html><meta charset="utf-8"><style>body{font-family:Georgia,serif;text-align:center;padding:7vh;color:#15324a}main{border:9px double #d7aa4e;padding:8vh 5vw}h1{font-size:3rem}.name{font-size:2.2rem;border-bottom:2px solid;padding:20px}p{font-size:1.25rem;line-height:1.6}@media print{button{display:none}}</style><main><h1>Certificat · Urkunde</h1><h2>Explorateur / Exploratrice de Strasbourg</h2><div class="name">${team}</div><p>${tx(`hat ${a.done} Stationen entdeckt und ${a.score} Punkte erreicht.`,`a découvert ${a.done} étapes et obtenu ${a.score} points.`)}</p><p>À bientôt Strasbourg!</p><button onclick="print()">Drucken / Imprimer</button></main>`);w.document.close()}
-fetch('stations.json?v=4').then(r=>r.json()).then(d=>{stations=d;document.getElementById('teamName').value=localStorage.getItem('teamName')||'';document.querySelector(`[data-route="${route}"]`).classList.add('selected');translate();if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{userPos={lat:p.coords.latitude,lon:p.coords.longitude};renderList()},()=>{})});
-document.querySelectorAll('[data-route]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-route]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');route=b.dataset.route;localStorage.setItem('route',route)});
+function initStations(d){stations=d;document.getElementById('teamName').value=localStorage.getItem('teamName')||'';document.querySelector(`[data-route="${route}"]`).classList.add('selected');translate();if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{userPos={lat:p.coords.latitude,lon:p.coords.longitude};renderList()},()=>{})}
+if(window.STATION_DATA)initStations(window.STATION_DATA);else fetch('stations.json?v=5').then(r=>r.json()).then(initStations);
+document.querySelectorAll('[data-route]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-route]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');route=b.dataset.route;localStorage.setItem('route',route);renderTourMap();renderList()});
 function openLanguageGate(){document.getElementById('languageGate').classList.remove('hidden')}
 function chooseLanguage(chosen){
 lang=chosen;

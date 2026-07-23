@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#15324a"><meta name="description" content="Digitale zweisprachige Straßburg-Rallye">
-<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css?v=4">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css?v=5">
 <title>À la découverte de Strasbourg</title>
 </head>
 <body>
@@ -44,6 +44,24 @@
   </div>
   <button class="primary" id="startBtn" data-de="Rallye starten" data-fr="Commencer la rallye"></button>
  </div>
+ <section class="tour-planner" aria-labelledby="tourMapTitle">
+  <div class="tour-planner-head">
+   <div>
+    <p class="overline" data-de="Vor dem Start planen" data-fr="Planifier avant le départ"></p>
+    <h2 id="tourMapTitle" data-de="Eure Tour auf einen Blick" data-fr="Votre parcours en un coup d’œil"></h2>
+    <p data-de="Entfernt den Haken bei Stationen, die ihr auslassen möchtet. Die Auswahl kann später jederzeit geändert werden."
+       data-fr="Décochez les étapes que vous souhaitez éviter. Vous pourrez modifier votre sélection à tout moment."></p>
+   </div>
+   <div id="routeEstimate" class="route-estimate" aria-live="polite"></div>
+  </div>
+  <div class="map-shell">
+   <div id="tourMap" class="tour-map" role="img" aria-label="Karte der Rallye-Stationen"></div>
+   <div class="map-key"><span><i class="key-active"></i><b data-de="dabei" data-fr="incluse"></b></span><span><i class="key-skipped"></i><b data-de="ausgelassen" data-fr="ignorée"></b></span></div>
+  </div>
+  <div id="mapStationPicker" class="map-station-picker"></div>
+  <p class="map-note" data-de="Die Kilometerangabe ist eine Orientierung auf Basis der direkten Verbindungen zwischen den Stationen. Tatsächliche Fußwege können länger sein."
+     data-fr="Le kilométrage est une estimation basée sur les liaisons directes entre les étapes. Les trajets à pied réels peuvent être plus longs."></p>
+ </section>
  <div class="grid2">
   <div class="card"><span class="feature">♿</span><h3 data-de="Flexible Teilnahme" data-fr="Participation flexible"></h3><p data-de="Stationen können jederzeit ohne Nachteil ausgelassen werden." data-fr="Les étapes peuvent être sautées à tout moment sans pénalité."></p></div>
   <div class="card"><span class="feature">🔒</span><h3 data-de="Privat" data-fr="Privé"></h3><p data-de="Alle Daten bleiben auf dem eigenen Gerät." data-fr="Toutes les données restent sur votre appareil."></p></div>
@@ -61,5 +79,5 @@
 </section>
 </main>
 <nav><button data-nav="home">⌂<small data-de="Start" data-fr="Accueil"></small></button><button data-nav="list">☷<small data-de="Stationen" data-fr="Étapes"></small></button><button id="installBtn" hidden>＋<small data-de="Installieren" data-fr="Installer"></small></button></nav>
-<script src="app.js?v=4"></script>
+<script src="stations-data.js?v=5"></script><script src="app.js?v=5"></script>
 </body></html>
