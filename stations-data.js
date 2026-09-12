@@ -346,5 +346,23 @@ window.STATION_DATA = [
       ],
       "answer": 0
     }
+  },
+
+  {
+    "id": 11,
+    "isPause": true,
+    "title_de": "PAUSE · Place Gutenberg",
+    "title_fr": "PAUSE · Place Gutenberg",
+    "motto_de": "Dégustation · 10 €",
+    "motto_fr": "Dégustation · 10 €",
+    "lat": 48.5816,
+    "lon": 7.7489,
+    "image": "pause-place-gutenberg.png",
+    "image_alt_de": "Vintage-Plakat zur Dégustation am Place Gutenberg",
+    "image_alt_fr": "Affiche vintage pour la dégustation place Gutenberg",
+    "image_caption_de": "Dégustation am Place Gutenberg · 10 €",
+    "image_caption_fr": "Dégustation place Gutenberg · 10 €",
+    "info_de": "Zeit für eine freiwillige Genusspause: Am Place Gutenberg wartet eine Dégustation für 10 €. Diese Pause ist keine Aufgabenstation und zählt nicht zur Wertung.",
+    "info_fr": "Place à une pause gourmande facultative : dégustation à 10 € place Gutenberg. Cette pause n’est pas une étape de jeu et ne compte pas dans le score."
   }
 ];
