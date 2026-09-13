@@ -42,31 +42,34 @@ function plannedDistance(){
 function renderTourMap(){
  const map=document.getElementById('tourMap'),picker=document.getElementById('mapStationPicker'),estimate=document.getElementById('routeEstimate');
  if(!map||!picker||!stations.length)return;
- const list=mapActiveStations(),lats=list.map(s=>s.lat),lons=list.map(s=>s.lon),minLat=Math.min(...lats),maxLat=Math.max(...lats),minLon=Math.min(...lons),maxLon=Math.max(...lons);
- const W=680,H=410,P=42,dx=maxLon-minLon||1,dy=maxLat-minLat||1;
- const points=list.map((s,i)=>{
-  let x=P+(s.lon-minLon)/dx*(W-P*2),y=H-P-(s.lat-minLat)/dy*(H-P*2);
-  if(i&&list.slice(0,i).some(o=>o.lat===s.lat&&o.lon===s.lon)){x+=24;y-=20}
-  return{s,x,y,skipped:!!state[s.id]?.skipped}
- });
- const route=points.filter(p=>!p.skipped).map(p=>`${p.x},${p.y}`).join(' ');
- map.setAttribute('aria-label',tx(`Karte mit ${list.length} Rallye-Stationen`,`Carte avec ${list.length} étapes du rallye`));
- map.innerHTML=`<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">
-  <defs><pattern id="blocks" width="54" height="54" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><rect width="43" height="34" rx="8" fill="#ffffff" opacity=".58"/></pattern></defs>
-  <rect width="${W}" height="${H}" rx="22" fill="#e8eee9"/><rect width="${W}" height="${H}" rx="22" fill="url(#blocks)"/>
-  <path d="M-30 338 C125 272 190 410 355 333 S555 255 720 302" fill="none" stroke="#9fcbd6" stroke-width="24" opacity=".9"/>
-  <path d="M-30 338 C125 272 190 410 355 333 S555 255 720 302" fill="none" stroke="#dceff3" stroke-width="12"/>
-  ${route?`<polyline points="${route}" fill="none" stroke="#a13945" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>`:''}
-  ${points.map(p=>`<g class="${p.skipped?'map-point skipped':'map-point'}" data-map-id="${p.s.id}" transform="translate(${p.x} ${p.y})"><circle r="18"/><text text-anchor="middle" dy=".36em">${p.s.id}</text></g>`).join('')}
-  <g transform="translate(626 43)" class="north"><text text-anchor="middle">N</text><path d="M0 8 L-7 25 L0 21 L7 25 Z"/></g>
- </svg>`;
+ const list=mapActiveStations();
+ // Handplatzierte Punkte auf dem illustrierten Straßburg-Stadtplan.
+ // So liegen die Marker direkt auf den bekannten Sehenswürdigkeiten.
+ const pos={
+  1:[58.5,42.5],  // Place Kléber
+  2:[82.8,51.0],  // Münster
+  3:[80.5,49.0],  // Maison Kammerzell
+  4:[84.8,55.0],  // Place du Château
+  5:[88.0,57.0],  // Palais Rohan
+  6:[81.5,58.0],  // Straßburger Eide
+  7:[39.0,67.0],  // Petite France
+  8:[35.0,73.5],  // Ill
+  9:[27.0,72.0],  // Barrage Vauban
+  10:[88.0,13.0]  // Europaviertel
+ };
+ map.setAttribute('aria-label',tx(`Illustrierter Stadtplan mit ${list.length} Rallye-Stationen`,`Plan illustré avec ${list.length} étapes du rallye`));
+ map.innerHTML=`<div class="city-map-stage">
+   <img class="city-map-image" src="https://www.alsace-vacances.com/plans-strasbourg/plans-strasbourg-2.jpg" alt="${tx('Illustrierter Stadtplan von Straßburg','Plan illustré de Strasbourg')}" referrerpolicy="no-referrer">
+   ${list.map(s=>{const [x,y]=pos[s.id]||[50,50];return `<button class="map-pin ${state[s.id]?.skipped?'skipped':''}" data-map-id="${s.id}" style="left:${x}%;top:${y}%" aria-label="${s.id}. ${lang==='de'?s.title_de:s.title_fr}"><span>${s.id}</span></button>`}).join('')}
+   <div class="map-credit">Plan: alsace-vacances.com</div>
+ </div>`;
  picker.innerHTML=list.map(s=>`<label class="map-pick ${state[s.id]?.skipped?'is-skipped':''}"><input type="checkbox" data-plan-id="${s.id}" ${state[s.id]?.skipped?'':'checked'}><span class="map-pick-number">${s.id}</span><span>${lang==='de'?s.title_de:s.title_fr}</span></label>`).join('');
  picker.querySelectorAll('[data-plan-id]').forEach(input=>input.onchange=()=>{
   const id=+input.dataset.planId;state[id]=state[id]||{answers:[]};state[id].skipped=!input.checked;if(input.checked)state[id].done=false;save();renderTourMap();renderList()
  });
  map.querySelectorAll('[data-map-id]').forEach(point=>point.onclick=()=>{const id=+point.dataset.mapId;const i=stations.findIndex(s=>s.id===id);if(i>=0){current=i;renderStation(i);show('station')}});
- const included=plannedStations().length,d=plannedDistance();
- estimate.innerHTML=`<strong>${included} / ${list.length}</strong><span>${tx('Stationen','étapes')}</span><strong>≈ ${d.toFixed(1)} km</strong><span>${tx('direkte Route','trajet direct')}</span>`
+ const d=plannedDistance(),count=plannedStations().length;
+ estimate.innerHTML=`<strong>${count}</strong><span>${tx('Stationen','étapes')}</span><strong>≈ ${d.toFixed(1)} km</strong><span>${tx('Luftlinie','à vol d’oiseau')}</span>`
 }
 function renderList(){const box=document.getElementById('stationList');if(!box||!stations.length)return;const list=activeStations();
 box.innerHTML=list.map(s=>{let x=state[s.id]||{},cls=s.isPause?'pause':x.done?'done':x.skipped?'skipped':'',icon=s.isPause?'🍷':x.done?'✓':x.skipped?'–':s.id;return`<div class="station-item ${cls}" data-open="${stations.indexOf(s)}"><div class="station-num">${icon}</div><div class="station-main"><h3>${lang==='de'?s.title_de:s.title_fr}</h3><p>${x.skipped?tx('Ausgelassen','Étape sautée'):(lang==='de'?s.motto_de:s.motto_fr)}</p><div class="distance">${distanceText(s)}</div></div><b>›</b></div>`}).join('');

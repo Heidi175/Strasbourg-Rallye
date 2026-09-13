@@ -33,3 +33,15 @@ nav{position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;justify-conte
 .language-choice strong{display:block;font-size:1.05rem}
 .language-choice small{display:block;margin-top:4px;color:var(--muted)}
 @media(max-width:480px){.language-buttons{grid-template-columns:1fr}.language-panel h2{font-size:1.7rem}}
+
+
+/* V7 – illustrierter Straßburg-Stadtplan */
+.tour-map{background:#efe7d5;overflow:hidden}
+.city-map-stage{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:#efe7d5}
+.city-map-image{display:block;width:100%;height:100%;object-fit:cover}
+.map-pin{position:absolute;z-index:3;transform:translate(-50%,-50%);width:34px;height:34px;padding:0;border:3px solid #fff;border-radius:50%;background:var(--red);color:#fff;box-shadow:0 3px 9px #0007;display:grid;place-items:center;font-weight:900;line-height:1}
+.map-pin span{pointer-events:none}
+.map-pin:hover,.map-pin:focus-visible{transform:translate(-50%,-50%) scale(1.15);outline:3px solid #f3cf83;outline-offset:2px}
+.map-pin.skipped{background:#aeb5b4;opacity:.78}
+.map-credit{position:absolute;right:7px;bottom:6px;background:#ffffffe6;color:#555;font-size:.55rem;padding:3px 6px;border-radius:6px}
+@media(max-width:480px){.map-pin{width:31px;height:31px;font-size:.78rem;border-width:2px}}
